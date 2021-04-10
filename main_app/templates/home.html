@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <title>Whacky Widgets</title>
+</head>
+<body>
+    <h1>Whacky Widgets</h1>
+
+{% if widget|length == 0 %}
+  
+<h3>No Widgets Yet</h3>
+
+{% else %}
+
+<table>
+    <tr>
+        <th>Description</th>&nbsp;&nbsp;
+        <th>Quantity</th>&nbsp;&nbsp;
+        <th>Delete</th>&nbsp;&nbsp;
+    </tr>
+    <tr>
+    {% for w in widget %}
+    <td>{{ w.description }}</td>
+    <td>{{ w.quantity }}</td>
+    <td><a href="/{{ w.id }}/delete/" class="delete">X</a></td>
+</tr>
+    {% endfor %}
+</table>
+
+
+{% endif %}
+
+<hr />
+
+<h4>Add Widget</h4>
+
+<form action="/create/" method="post">
+    {% csrf_token %}
+    <label for="description">Description:</label> <input name="description">
+    <br />
+    <label for="quantity">Quantity:</label> <input name="quantity">
+    <br />
+    <button class="btn">Add Widget</button>
+</form>
+
+</body>
+</html>
